@@ -1,0 +1,27 @@
+spring:
+  web:
+    locale: en
+  jackson:
+    date-format: yyyy-MM-dd
+    time-zone: UTC
+    serialization:
+      write-dates-as-timestamps: false
+  application:
+    name: soa_first_service
+  datasource:
+    url: ${POSTGRES_URL}
+    username: ${POSTGRES_USERNAME}
+    password: ${POSTGRES_PASSWORD}
+  jpa:
+    hibernate:
+      ddl-auto: create
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+server:
+  port: 2828
+  ssl:
+    key-store: classpath:keystore.p12
+    key-store-password: changeit
+    key-store-type: PKCS12
+    key-alias: myserver
