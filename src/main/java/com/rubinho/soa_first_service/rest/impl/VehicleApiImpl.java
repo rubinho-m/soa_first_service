@@ -12,6 +12,7 @@ import com.rubinho.soa_first_service.services.VehicleService;
 import com.rubinho.soa_first_service.utils.PageableUtils;
 import com.rubinho.soa_first_service.utils.SpecificationUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
@@ -38,8 +39,9 @@ public class VehicleApiImpl implements VehicleApi {
 
     @Override
     public ResponseEntity<AllVehiclePageableResponseDto> getAllVehicles(int page, int pageSize, String sort, String filter) {
+        Pageable pageable = pageableUtils.getPageable(page, pageSize, sort);
         final VehicleService.AllVehicles vehicles = vehicleService.getAll(
-                pageableUtils.getPageable(page, pageSize, sort),
+                pageable,
                 specificationUtils.buildSpecification(filter)
         );
         final List<Vehicle> vehicleList = vehicles.vehicles();
@@ -50,7 +52,7 @@ public class VehicleApiImpl implements VehicleApi {
                                 .toList())
                         .page(Math.max(page, 0))
                         .totalPages(vehicles.totalPages())
-                        .pageSize(pageSize < 0 ? vehicleList.size() : pageSize)
+                        .pageSize(pageable.isUnpaged() ? vehicleList.size() : pageable.getPageSize())
                         .build()
         );
     }
