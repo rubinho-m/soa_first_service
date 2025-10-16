@@ -9,12 +9,13 @@ spring:
   application:
     name: soa_first_service
   datasource:
-    url: ${POSTGRES_URL}
-    username: ${POSTGRES_USERNAME}
-    password: ${POSTGRES_PASSWORD}
+    jndi-name: "java:jboss/datasources/soa"
+#    url: ${POSTGRES_URL}
+#    username: ${POSTGRES_USERNAME}
+#    password: ${POSTGRES_PASSWORD}
   jpa:
     hibernate:
-      ddl-auto: create
+      ddl-auto: update
     properties:
       hibernate:
         dialect: org.hibernate.dialect.PostgreSQLDialect
@@ -25,3 +26,6 @@ server:
     key-store-password: changeit
     key-store-type: PKCS12
     key-alias: myserver
+logging:
+  level:
+    root: info

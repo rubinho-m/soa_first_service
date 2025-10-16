@@ -2,6 +2,7 @@ plugins {
     id 'java'
     id 'org.springframework.boot' version '3.5.6'
     id 'io.spring.dependency-management' version '1.1.7'
+    id 'war'
 }
 
 group = 'com.rubinho'
@@ -17,6 +18,9 @@ java {
 configurations {
     compileOnly {
         extendsFrom annotationProcessor
+    }
+    configureEach {
+        exclude group: 'ch.qos.logback', module: 'logback-classic'
     }
 }
 
@@ -34,6 +38,11 @@ dependencies {
     annotationProcessor 'org.projectlombok:lombok'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+    providedRuntime 'org.springframework.boot:spring-boot-starter-tomcat'
+    implementation('org.springframework.boot:spring-boot-starter-web') {
+        exclude group: 'org.springframework.boot', module: 'spring-boot-starter-tomcat'
+    }
+    implementation("jakarta.servlet:jakarta.servlet-api:6.1.0")
 }
 
 tasks.named('test') {
