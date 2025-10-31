@@ -20,7 +20,7 @@ spring:
       hibernate:
         dialect: org.hibernate.dialect.PostgreSQLDialect
 server:
-  port: 2828
+  port: ${FIRST_SERVICE_PORT:2828}
   ssl:
     key-store: classpath:keystore.p12
     key-store-password: changeit

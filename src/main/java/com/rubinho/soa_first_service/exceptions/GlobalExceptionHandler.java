@@ -35,8 +35,8 @@ public class GlobalExceptionHandler {
     }
 
     @ExceptionHandler(value = {HttpMessageNotReadableException.class})
-    public ResponseEntity<String> messageNotReadable(HttpMessageNotReadableException ex) {
-        return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body("Invalid request body. %s".formatted(ex.getMessage()));
+    public ResponseEntity<String> messageNotReadable(HttpMessageNotReadableException ignored) {
+        return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body("Invalid request body. Failed parse json");
     }
 
     @ExceptionHandler(value = {MethodArgumentTypeMismatchException.class})
