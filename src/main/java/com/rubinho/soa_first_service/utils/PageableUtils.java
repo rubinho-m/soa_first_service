@@ -1,6 +1,6 @@
 package com.rubinho.soa_first_service.utils;
 
-import com.rubinho.soa_first_service.dto.response.SortException;
+import com.rubinho.soa_first_service.exceptions.SortException;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;

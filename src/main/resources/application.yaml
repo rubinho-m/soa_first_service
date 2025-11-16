@@ -1,4 +1,17 @@
 spring:
+  cloud:
+    consul:
+      host: consul
+      port: 8500
+      discovery:
+        enabled: true
+        register: true
+        health-check-path: /actuator/health
+        health-check-interval: 10s
+        health-check-tls-skip-verify: true
+        scheme: https
+        port: ${SERVER_PORT}
+        hostname: ${SERVER_HOSTNAME}
   web:
     locale: en
   jackson:
@@ -9,23 +22,28 @@ spring:
   application:
     name: soa_first_service
   datasource:
-    jndi-name: "java:jboss/datasources/soa"
-#    url: ${POSTGRES_URL}
-#    username: ${POSTGRES_USERNAME}
-#    password: ${POSTGRES_PASSWORD}
+#    jndi-name: "java:jboss/datasources/soa"
+    url: ${POSTGRES_URL}
+    username: ${POSTGRES_USERNAME}
+    password: ${POSTGRES_PASSWORD}
   jpa:
     hibernate:
-      ddl-auto: update
+      ddl-auto: create
     properties:
       hibernate:
         dialect: org.hibernate.dialect.PostgreSQLDialect
 server:
-  port: ${FIRST_SERVICE_PORT:2828}
+  port: ${SERVER_PORT}
   ssl:
     key-store: classpath:keystore.p12
     key-store-password: changeit
     key-store-type: PKCS12
     key-alias: myserver
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info
 logging:
   level:
     root: info

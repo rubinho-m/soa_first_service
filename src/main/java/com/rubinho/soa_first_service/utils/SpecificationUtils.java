@@ -1,6 +1,6 @@
 package com.rubinho.soa_first_service.utils;
 
-import com.rubinho.soa_first_service.dto.response.FilterException;
+import com.rubinho.soa_first_service.exceptions.FilterException;
 import com.rubinho.soa_first_service.model.Vehicle;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.Path;

@@ -15,33 +15,39 @@ import java.util.stream.Collectors;
 @RestControllerAdvice
 public class GlobalExceptionHandler {
     @ExceptionHandler(value = {ResponseStatusException.class})
-    public ResponseEntity<String> handleException(ResponseStatusException ex) {
-        return ResponseEntity.status(ex.getStatusCode()).body(ex.getReason());
+    public ResponseEntity<ErrorMessage> handleException(ResponseStatusException ex) {
+        return ResponseEntity.status(ex.getStatusCode())
+                .body(new ErrorMessage(ex.getReason()));
     }
 
     @ExceptionHandler(value = {Exception.class})
-    public ResponseEntity<String> handleException(Exception ex) {
-        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(ex.getMessage());
+    public ResponseEntity<ErrorMessage> handleException(Exception ex) {
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                .body(new ErrorMessage(ex.getMessage()));
     }
 
     @ExceptionHandler(value = {HttpRequestMethodNotSupportedException.class})
-    public ResponseEntity<String> methodNotAllowedException(HttpRequestMethodNotSupportedException ex) {
-        return ResponseEntity.status(HttpStatus.METHOD_NOT_ALLOWED).body(ex.getMessage());
+    public ResponseEntity<ErrorMessage> methodNotAllowedException(HttpRequestMethodNotSupportedException ex) {
+        return ResponseEntity.status(HttpStatus.METHOD_NOT_ALLOWED)
+                .body(new ErrorMessage(ex.getMessage()));
     }
 
     @ExceptionHandler(value = {MethodArgumentNotValidException.class})
-    public ResponseEntity<String> validationException(MethodArgumentNotValidException ex) {
-        return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body(getValidationMessage(ex));
+    public ResponseEntity<ErrorMessage> validationException(MethodArgumentNotValidException ex) {
+        return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY)
+                .body(new ErrorMessage(getValidationMessage(ex)));
     }
 
     @ExceptionHandler(value = {HttpMessageNotReadableException.class})
-    public ResponseEntity<String> messageNotReadable(HttpMessageNotReadableException ignored) {
-        return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body("Invalid request body. Failed parse json");
+    public ResponseEntity<ErrorMessage> messageNotReadable(HttpMessageNotReadableException ignored) {
+        return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY)
+                .body(new ErrorMessage("Invalid request body. Failed parse json"));
     }
 
     @ExceptionHandler(value = {MethodArgumentTypeMismatchException.class})
-    public ResponseEntity<String> pathValidationException(MethodArgumentTypeMismatchException ex) {
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Bad request. Invalid param: %s".formatted(ex.getPropertyName()));
+    public ResponseEntity<ErrorMessage> pathValidationException(MethodArgumentTypeMismatchException ex) {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                .body(new ErrorMessage("Bad request. Invalid param: %s".formatted(ex.getPropertyName())));
     }
 
     private String getValidationMessage(MethodArgumentNotValidException ex) {

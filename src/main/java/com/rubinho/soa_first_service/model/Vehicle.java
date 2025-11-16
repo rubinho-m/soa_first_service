@@ -16,7 +16,6 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDate;
-import java.util.Date;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -31,7 +30,7 @@ public class Vehicle {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false)
+    @Column(nullable = false, columnDefinition = "TEXT")
     private String name;
 
     @Column(nullable = false)

@@ -1,4 +1,4 @@
-package com.rubinho.soa_first_service.dto.response;
+package com.rubinho.soa_first_service.exceptions;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.server.ResponseStatusException;
