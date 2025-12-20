@@ -1,11 +1,11 @@
 package com.rubinho.soa_first_service.mappers;
 
-import com.rubinho.soa_first_service.dto.request.VehicleRequestDto;
-import com.rubinho.soa_first_service.dto.response.VehicleResponseDto;
+import com.rubinho.soa_first_service.generated.vehicles.VehicleRequest;
+import com.rubinho.soa_first_service.generated.vehicles.VehicleResponse;
 import com.rubinho.soa_first_service.model.Vehicle;
 
 public interface VehicleMapper {
-    Vehicle toEntity(VehicleRequestDto requestDto);
+    Vehicle toEntity(VehicleRequest vehicleRequest);
 
-    VehicleResponseDto toResponseDto(Vehicle vehicle);
+    VehicleResponse toResponse(Vehicle vehicle);
 }

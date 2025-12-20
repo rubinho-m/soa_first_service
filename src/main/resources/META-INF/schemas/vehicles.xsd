@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           targetNamespace="https://com/rubinho/soa_first_service/generated/vehicles"
+           xmlns="https://com/rubinho/soa_first_service/generated/vehicles"
+           elementFormDefault="qualified">
+
+    <!-- Coordinates -->
+    <xs:complexType name="Coordinates">
+        <xs:sequence>
+            <xs:element name="x" type="xs:int"/>
+            <xs:element name="y" type="xs:int"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <!-- VehicleRequest -->
+    <xs:complexType name="VehicleRequest">
+        <xs:sequence>
+            <xs:element name="name" type="xs:string"/>
+            <xs:element name="coordinates" type="Coordinates"/>
+            <xs:element name="enginePower" type="xs:float" minOccurs="0"/>
+            <xs:element name="type" type="xs:string"/>
+            <xs:element name="fuelType" type="xs:string"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <!-- VehicleResponse -->
+    <xs:complexType name="VehicleResponse">
+        <xs:sequence>
+            <xs:element name="id" type="xs:long"/>
+            <xs:element name="name" type="xs:string"/>
+            <xs:element name="coordinates" type="Coordinates"/>
+            <xs:element name="creationDate" type="xs:date"/>
+            <xs:element name="enginePower" type="xs:float" minOccurs="0"/>
+            <xs:element name="type" type="xs:string"/>
+            <xs:element name="fuelType" type="xs:string"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <!-- getAllVehicles Request & Response -->
+    <xs:element name="getAllVehiclesRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="page" type="xs:int" minOccurs="0"/>
+                <xs:element name="pageSize" type="xs:int" minOccurs="0"/>
+                <xs:element name="sort" type="xs:string" minOccurs="0"/>
+                <xs:element name="filter" type="xs:string" minOccurs="0"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="getAllVehiclesResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="vehicles" type="VehicleResponse" minOccurs="0" maxOccurs="unbounded"/>
+                <xs:element name="totalPages" type="xs:int"/>
+                <xs:element name="page" type="xs:int"/>
+                <xs:element name="pageSize" type="xs:int"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <!-- getAverageEnginePower Request & Response -->
+    <xs:element name="getAverageEnginePowerRequest">
+        <xs:complexType/>
+    </xs:element>
+    <xs:element name="getAverageEnginePowerResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="averageEnginePower" type="xs:float"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <!-- getRandomWithMaxCoordinates Request & Response -->
+    <xs:element name="getRandomWithMaxCoordinatesRequest">
+        <xs:complexType/>
+    </xs:element>
+    <xs:element name="getRandomWithMaxCoordinatesResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="vehicle" type="VehicleResponse"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <!-- getVehicle Request & Response -->
+    <xs:element name="getVehicleRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="id" type="xs:long"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="getVehicleResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="vehicle" type="VehicleResponse"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <!-- createVehicle Request & Response -->
+    <xs:element name="createVehicleRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="vehicle" type="VehicleRequest"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="createVehicleResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="vehicle" type="VehicleResponse"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <!-- updateVehicle Request & Response -->
+    <xs:element name="updateVehicleRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="id" type="xs:long"/>
+                <xs:element name="vehicle" type="VehicleRequest"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="updateVehicleResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="vehicle" type="VehicleResponse"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <!-- deleteVehicle Request & Response -->
+    <xs:element name="deleteVehicleRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="id" type="xs:long"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="deleteVehicleResponse">
+        <xs:complexType/>
+    </xs:element>
+</xs:schema>
