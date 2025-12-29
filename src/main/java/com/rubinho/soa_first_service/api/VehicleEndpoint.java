@@ -116,6 +116,7 @@ public class VehicleEndpoint {
     @PayloadRoot(namespace = NAMESPACE_URI, localPart = "createVehicleRequest")
     @ResponsePayload
     public CreateVehicleResponse createVehicle(@RequestPayload CreateVehicleRequest request) {
+        log.info("vehicle x: {}", request.getVehicle().getCoordinates().getX());
         final CreateVehicleResponse createVehicleResponse = new CreateVehicleResponse();
         createVehicleResponse.setVehicle(vehicleMapper.toResponse(
                 vehicleService.create(

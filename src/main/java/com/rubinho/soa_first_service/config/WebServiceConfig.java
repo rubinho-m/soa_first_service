@@ -4,10 +4,10 @@ import com.rubinho.soa_first_service.exceptions.DetailSoapFaultDefinitionExcepti
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.web.server.ResponseStatusException;
 import org.springframework.web.server.ServerErrorException;
 import org.springframework.ws.soap.server.endpoint.SoapFaultDefinition;
 import org.springframework.ws.soap.server.endpoint.SoapFaultMappingExceptionResolver;
+import org.springframework.ws.soap.server.endpoint.interceptor.PayloadValidatingInterceptor;
 import org.springframework.ws.wsdl.wsdl11.DefaultWsdl11Definition;
 import org.springframework.xml.xsd.SimpleXsdSchema;
 
@@ -26,6 +26,14 @@ public class WebServiceConfig {
         wsdl11Definition.setTargetNamespace("https://com/rubinho/soa_first_service/generated/vehicles");
         wsdl11Definition.setSchema(vehiclesWs);
         return wsdl11Definition;
+    }
+
+    @Bean
+    public PayloadValidatingInterceptor validatingInterceptor(SimpleXsdSchema vehiclesWs) {
+        PayloadValidatingInterceptor interceptor = new CustomPayloadValidatingInterceptor();
+        interceptor.setValidateRequest(true);
+        interceptor.setXsdSchema(vehiclesWs);
+        return interceptor;
     }
 
     @Bean

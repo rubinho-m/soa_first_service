@@ -1,9 +1,11 @@
 package com.rubinho.soa_first_service.services.impl;
 
+import com.rubinho.soa_first_service.exceptions.UnprocessableEntityException;
 import com.rubinho.soa_first_service.model.Vehicle;
 import com.rubinho.soa_first_service.repository.VehicleRepository;
 import com.rubinho.soa_first_service.services.VehicleService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
@@ -71,10 +73,14 @@ public class VehicleServiceImpl implements VehicleService {
     }
 
     private Vehicle create(Vehicle vehicle, LocalDate creationDate) {
-        if (creationDate != null) {
-            vehicle.setCreationDate(creationDate);
+        try {
+            if (creationDate != null) {
+                vehicle.setCreationDate(creationDate);
+            }
+            return vehicleRepository.save(vehicle);
+        } catch (DataAccessException e) {
+            throw new UnprocessableEntityException("Invalid request body. Error: %s".formatted(e.getMessage()));
         }
-        return vehicleRepository.save(vehicle);
     }
 
     private double distance(int x, int y) {
